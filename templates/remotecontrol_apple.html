@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}设备远程控制{% end %}
+{% block title %}AF IOS device{% end %}
 
 
 {% block style %}
@@ -121,7 +121,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <div class="navbar-nav">
         <a class="nav-item nav-link active" href="/">
-          <i class="fab fa-apple"></i> 苹果设备</a>
+          <i class="fab fa-apple"></i>Apple device</a>
         <!-- <a class="nav-item nav-link active" href='/'> -->
         <!-- </a> -->
       </div>
@@ -132,14 +132,14 @@
             {{current_user.email}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/user">用户信息</a>
+            <a class="dropdown-item" href="/user">User Info</a>
             <a class="dropdown-item" href="/logout">Logout</a>
           </div>
         </div>
         <form class="form-inline">
-          <button class="btn btn-warning" type="button" @click="stopUsing">停止使用</button>
+          <button class="btn btn-warning" type="button" @click="stopUsing">Stop using</button>
           <span ref="usingTime" class="navbar-text" style="margin-left: 1em">
-            使用时长
+            Length of use
           </span>
         </form>
       </div>
@@ -184,22 +184,23 @@
     </div>
     <div class="col-sm debugarea height-auto-fill flex-reset" style="overflow-y: auto">
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
-        <el-tab-pane label="常用" name="common">
+        <el-tab-pane label="Commonly used" name="common">
           <div class="card-columns">
             <div class="card">
               <div class="card-header">
-                <i class="fab fa-angellist"></i> 常用功能
-                <span style="font-size: 0.7em; padding-top: 5px; color: gray">注: iOS的弹窗不能通过屏幕点击来选择</span>
+                <i class="fab fa-angellist"></i> Common Functions
+                <span style="font-size: 0.7em; padding-top: 5px; color: gray">Note: iOS Pop-up window can't be selected by screen click</span>
               </div>
               <div class="card-body">
                 <el-button size="mini" @click="hotfix">
                   <i class="fas fa-hammer"></i>
-                  修复旋转
+                  Repair rotation
                 </el-button>
-                <el-button size="mini" @click="screenshot">截图</el-button>
-
+                <el-button size="mini" @click="screenshot">
+                  Screenshot
+                </el-button>
                 <el-button size="mini" :loading="alert.loading" @click="chooseAlertButtons">
-                  选择弹框按钮
+                  Select the snap button
                 </el-button>
                 <el-dialog title="弹窗选择" :visible.sync="alert.visible">
                   <span style="padding: 5px" v-for="v in alert.buttons">
@@ -212,19 +213,19 @@
 
             <div class="card">
               <div class="card-header">
-                <i class="fas fa-bolt"></i> 快捷启动
+                <i class="fas fa-bolt"></i> Quick start
               </div>
               <div class="card-body">
                 <el-button round size="small" @click="appOpen('com.apple.Preferences')">
                   <i class="el-icon-setting"></i>
-                  设置
+                  Setting
                 </el-button>
               </div>
             </div>
 
             <div class="card">
               <div class="card-header">
-                <i class="fas fa-bug"></i> 调试信息
+                <i class="fas fa-bug"></i> Debug information
               </div>
               <div class="card-body">
                 <dl>
@@ -249,7 +250,7 @@
 
             <div class="card">
               <div class="card-header">
-                <i class="fas fa-cubes"></i> 安装管理
+                <i class="fas fa-cubes"></i> Installation management
               </div>
               <div class=card-body">
                 <!-- <el-button>Accept(TODO)</el-button> -->
@@ -257,15 +258,15 @@
                   <el-upload ref="upload" drag accept=".ipa" action="/uploads" :on-success="onUpload"
                     :on-preview="onUploadSelect">
                     <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">将安装包拖到此处安装，或<em>点击上传</em></div>
-                    <div class="el-upload__tip" slot="tip">只能上传ipa文件，且不超过2G</div>
+                    <div class="el-upload__text">Drag the installation package here to install, or<em>Click to upload</em></div>
+                    <div class="el-upload__tip" slot="tip">Can only upload ipa files, and no more than 2G</div>
                   </el-upload>
                   <div class="form-group">
                     <label>URL</label>
                     <input type="text" placeholder="http://..." v-model="app.url" class="form-control form-control-sm">
                   </div>
                   <el-button @click="appInstall" :loading="!app.finished" :disabled="!app.finished || !app.url"
-                    size="small">安装</el-button>
+                    size="small">Installation</el-button>
                   <hr v-if="!!app.message">
                   <pre style="white-space: normal" v-text="app.message"></pre>
                 </div>

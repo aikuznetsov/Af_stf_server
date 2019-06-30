@@ -2,6 +2,7 @@
 #
 
 from logzero import logger
+import os
 
 from .auth import AuthError, OpenIdMixin
 from .base import BaseRequestHandler
@@ -32,10 +33,14 @@ class OpenIdLoginHandler(BaseRequestHandler, OpenIdMixin):
 class SimpleLoginHandler(BaseRequestHandler):
     def get(self):
         self.set_cookie("next", self.get_argument("next", "/"))
-        self.write('<html><body><form action="/login" method="post">'
-                   'Name: <input type="text" name="name" required>'
+        cwd = os.getcwd()
+        self.write('<html><body>'
+        '<center>'
+        '<img src="https://imagizer.imageshack.com/img924/2135/19C3kS.png" style="width:384px;height:221px;">'
+        '<form action="/login" method="post">'
+                   'Login: <input type="text" name="name" required>'
                    '<input type="submit" value="Sign in">'
-                   '</form></body></html>')
+                   '</form></center></body></html>')
 
     async def post(self):
         name = self.get_argument("name")
